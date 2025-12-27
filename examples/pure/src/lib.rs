@@ -183,8 +183,10 @@ fn print_c(c: Option<C>) {
         println!("None");
     }
 }
-impl FromPyObject<'_> for C {
-    fn extract_bound(ob: &Bound<'_, PyAny>) -> PyResult<Self> {
+impl<'py> FromPyObject<'_, 'py> for C {
+    type Error = PyErr;
+
+    fn extract(ob: Borrowed<'_, 'py, PyAny>) -> Result<Self, Self::Error> {
         Ok(C { x: ob.extract()? })
     }
 }
