@@ -1,6 +1,8 @@
 use pyo3_stub_gen::Result;
 
 fn main() -> Result<()> {
+    pyo3::Python::initialize();
+
     env_logger::Builder::from_env(env_logger::Env::default().filter_or("RUST_LOG", "info")).init();
     let stub = feature_gated::stub_info()?;
     stub.generate()?;
